@@ -1,0 +1,316 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   ArchForge design tokens
+   Warm, editorial, Claude-inspired. Raw values live in :root so they can be
+   referenced directly in CSS (React Flow, gradients), and are mapped into the
+   Tailwind v4 @theme so utilities like `bg-surface` / `text-muted` exist.
+   ============================================================================ */
+
+:root {
+  /* Surfaces & structure */
+  --background: #f8f6f2;
+  --secondary-bg: #f3f0ea;
+  --surface: #fcfbf7;
+  --surface-hover: #faf8f4;
+  --border: #e5e1d8;
+  --border-strong: #d8d3c7;
+  --grid: #e9e5dc;
+
+  /* Text */
+  --text: #26231e;
+  --text-secondary: #5e584e;
+  --muted: #857d72;
+
+  /* Brand accent */
+  --accent: #cc785c;
+  --accent-hover: #9e5c30;
+  --accent-soft: #f1e4d8;
+  --accent-ring: rgba(181, 110, 61, 0.4);
+
+  /* Semantic status */
+  --success: #4f7a5a;
+  --success-soft: #e6eee7;
+  --warning: #b6872d;
+  --warning-soft: #f4ecd7;
+  --critical: #b24a3a;
+  --critical-soft: #f3e1dc;
+  --info: #5e7a8a;
+  --info-soft: #e4ebef;
+
+  /* Radii */
+  --radius: 0.625rem;
+
+  /* Shadows — soft, warm, low-contrast */
+  --shadow-xs: 0 1px 2px rgba(38, 35, 30, 0.04);
+  --shadow-sm: 0 1px 3px rgba(38, 35, 30, 0.06), 0 1px 2px rgba(38, 35, 30, 0.04);
+  --shadow-md: 0 4px 12px rgba(38, 35, 30, 0.08), 0 2px 4px rgba(38, 35, 30, 0.04);
+  --shadow-lg: 0 12px 32px rgba(38, 35, 30, 0.1), 0 4px 8px rgba(38, 35, 30, 0.05);
+}
+
+@theme inline {
+  /* Colors -> utilities (bg-*, text-*, border-*, ring-*) */
+  --color-background: var(--background);
+  --color-secondary-bg: var(--secondary-bg);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-grid: var(--grid);
+
+  --color-text: var(--text);
+  --color-text-secondary: var(--text-secondary);
+  --color-muted: var(--muted);
+
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-critical: var(--critical);
+  --color-critical-soft: var(--critical-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+
+  /* Typography */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
+
+  /* Radii */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Shadows */
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+}
+
+/* ----------------------------------------------------------------------------
+   Base layer
+   ---------------------------------------------------------------------------- */
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Editorial heading rhythm — tightened tracking on large display text */
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--text);
+    font-weight: 600;
+    letter-spacing: -0.018em;
+    text-wrap: balance;
+  }
+
+  h1 {
+    letter-spacing: -0.028em;
+    line-height: 1.05;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Accent focus rings everywhere */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background-color: var(--accent-soft);
+    color: var(--text);
+  }
+
+  /* Warm, slim scrollbars */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-strong) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: var(--border-strong);
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: var(--muted);
+    background-clip: content-box;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   Utilities & reusable patterns
+   ---------------------------------------------------------------------------- */
+@layer utilities {
+  /* Subtle warm dot-grid used by the landing hero & empty canvas states */
+  .bg-dot-grid {
+    background-image: radial-gradient(var(--grid) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Numeric tabular alignment for metrics & tables */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   Animations
+   Lightweight, hand-rolled replacements for `tailwindcss-animate`. Radix
+   overlays toggle these via `data-[state=open]:animate-in` /
+   `data-[state=closed]:animate-out`.
+   ---------------------------------------------------------------------------- */
+@keyframes af-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes af-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes af-exit {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.97) translateY(-2px);
+  }
+}
+
+@keyframes af-overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes af-overlay-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes af-dialog-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes af-dialog-out {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+}
+
+@keyframes af-pulse-soft {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: af-fade-in 0.3s ease-out;
+  }
+  .animate-in {
+    animation: af-enter 0.16s ease-out;
+  }
+  .animate-out {
+    animation: af-exit 0.14s ease-in forwards;
+  }
+  .animate-overlay-in {
+    animation: af-overlay-in 0.2s ease-out;
+  }
+  .animate-overlay-out {
+    animation: af-overlay-out 0.16s ease-in forwards;
+  }
+  .animate-dialog-in {
+    animation: af-dialog-in 0.18s ease-out;
+  }
+  .animate-dialog-out {
+    animation: af-dialog-out 0.15s ease-in forwards;
+  }
+  .animate-pulse-soft {
+    animation: af-pulse-soft 1.8s ease-in-out infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
