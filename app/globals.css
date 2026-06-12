@@ -427,16 +427,21 @@
     animation: af-drift 24s ease-in-out infinite;
   }
 
-  /* Very light float for the hero architecture image (2–4px). */
+  /* Very light, slow float for the hero architecture image (2–4px). */
   .animate-float {
-    animation: af-float 7s ease-in-out infinite;
+    animation: af-float 11s ease-in-out infinite;
   }
 
-  /* One-time hero image entrance — descends from above, the opposite of the
-     hero text, which rises up via <Reveal>. `both` holds the start frame
+  /* One-time hero image entrance — descends slowly from above, the opposite of
+     the hero text, which rises up via <Reveal>. `both` holds the start frame
      through any animation-delay so there's no flash of the final position. */
   .animate-hero-image-in {
-    animation: af-hero-image-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: af-hero-image-in 1.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  /* Navbar drop-in — falls down from above the viewport on load. */
+  .animate-nav-in {
+    animation: af-nav-in 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 }
 
@@ -471,6 +476,17 @@
   }
 }
 
+@keyframes af-nav-in {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Scroll-reveal: hidden until the IntersectionObserver in <Reveal> adds
    `.is-visible`. Honors `--reveal-delay` for staggered entrances. */
 .reveal {
@@ -485,6 +501,12 @@
 .reveal.is-visible {
   opacity: 1;
   transform: none;
+}
+
+/* Hero copy eases in more slowly than the standard reveal. Higher specificity
+   than `.reveal` so it overrides just the duration, keeping the delay var. */
+.reveal.hero-reveal {
+  transition-duration: 1.2s;
 }
 
 /* Top-of-page scroll progress bar. */

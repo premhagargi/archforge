@@ -108,7 +108,7 @@ export default function HomePage() {
               where the hero is text-only on the warm background. */}
           <div
             aria-hidden
-            className="animate-hero-image-in absolute -inset-4 hidden [animation-delay:150ms] lg:block"
+            className="animate-hero-image-in absolute -inset-4 hidden [animation-delay:350ms] lg:block"
           >
             <div className="animate-float absolute inset-0">
               <Image
@@ -138,7 +138,7 @@ export default function HomePage() {
           />
 
           <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6 py-24">
-            <Reveal className="flex max-w-2xl flex-col items-center gap-7 text-center lg:items-start lg:text-left">
+            <Reveal className="hero-reveal flex max-w-2xl flex-col items-center gap-7 text-center lg:items-start lg:text-left">
               <Badge variant="accent">Open-source · runs in your browser</Badge>
               <h1 className="text-balance text-5xl font-medium leading-[1.02] sm:text-6xl lg:text-7xl">
                 Design systems that scale.

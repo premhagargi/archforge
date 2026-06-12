@@ -35,7 +35,7 @@ export function SiteNav() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 transition-colors duration-300",
+        "animate-nav-in sticky top-0 z-50 transition-colors duration-300",
         scrolled
           ? "border-b border-border/70 bg-background/80 backdrop-blur-md"
           : "border-b border-transparent bg-transparent",
