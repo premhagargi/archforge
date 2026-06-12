@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -15,13 +16,32 @@ const NAV_LINKS = [
   { href: "/about", label: "About" },
 ] as const;
 
-/** Sticky top navigation shared across all marketing pages. */
+/**
+ * Sticky top navigation shared across all marketing pages. Transparent while at
+ * the top of the page — so the hero shows through — and fades to a frosted bar
+ * once the page is scrolled. Its `h-16` height matches the hero's `-mt-16`.
+ */
 export function SiteNav() {
   const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/70 bg-background/80 backdrop-blur-md">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-6 py-3.5">
+    <header
+      className={cn(
+        "sticky top-0 z-50 transition-colors duration-300",
+        scrolled
+          ? "border-b border-border/70 bg-background/80 backdrop-blur-md"
+          : "border-b border-transparent bg-transparent",
+      )}
+    >
+      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-4 px-6">
         <Link href="/" className="rounded-md" aria-label="ArchForge home">
           <Logo />
         </Link>

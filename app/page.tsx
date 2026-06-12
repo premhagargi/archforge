@@ -100,22 +100,28 @@ export default function HomePage() {
       <SiteNav />
 
       <main className="flex-1">
-        {/* Hero — full-bleed, the architecture image *is* the hero. */}
-        <section className="relative flex min-h-svh items-center overflow-hidden border-b border-border">
+        {/* Hero — full-bleed, the architecture image *is* the hero. Pulled up
+            behind the transparent nav (-mt-16) so the image shows through it. */}
+        <section className="relative -mt-16 flex min-h-svh items-center overflow-hidden border-b border-border pt-16">
           {/* Architecture visual. Slightly oversized and gently floating so the
               diagram feels alive — no parallax, no hard edges. Hidden on mobile,
               where the hero is text-only on the warm background. */}
-          <div aria-hidden className="animate-float absolute -inset-4 hidden sm:block">
-            <Image
-              src="/images/hero-architecture.png"
-              alt=""
-              fill
-              sizes="100vw"
-              quality={90}
-              loading="eager"
-              fetchPriority="high"
-              className="object-cover object-right sm:object-contain"
-            />
+          <div
+            aria-hidden
+            className="animate-hero-image-in absolute -inset-4 hidden [animation-delay:150ms] lg:block"
+          >
+            <div className="animate-float absolute inset-0">
+              <Image
+                src="/images/hero-architecture.png"
+                alt=""
+                fill
+                sizes="(min-width: 1024px) 100vw, 0px"
+                quality={90}
+                loading="eager"
+                fetchPriority="high"
+                className="object-contain object-right"
+              />
+            </div>
           </div>
 
           {/* Readability wash over the desktop image — strong on the left,
@@ -123,7 +129,7 @@ export default function HomePage() {
               wash needed there. */}
           <div
             aria-hidden
-            className="absolute inset-0 hidden sm:block bg-[linear-gradient(90deg,rgba(248,246,242,0.97)_0%,rgba(248,246,242,0.88)_30%,rgba(248,246,242,0.38)_56%,rgba(248,246,242,0)_74%)]"
+            className="absolute inset-0 hidden lg:block bg-[linear-gradient(90deg,rgba(248,246,242,0.97)_0%,rgba(248,246,242,0.88)_30%,rgba(248,246,242,0.38)_56%,rgba(248,246,242,0)_74%)]"
           />
           {/* Bottom fade so the image melts into the page background. */}
           <div
@@ -132,7 +138,7 @@ export default function HomePage() {
           />
 
           <div className="relative z-10 mx-auto w-full max-w-[1280px] px-6 py-24">
-            <Reveal className="flex max-w-2xl flex-col items-center gap-7 text-center sm:items-start sm:text-left">
+            <Reveal className="flex max-w-2xl flex-col items-center gap-7 text-center lg:items-start lg:text-left">
               <Badge variant="accent">Open-source · runs in your browser</Badge>
               <h1 className="text-balance text-5xl font-medium leading-[1.02] sm:text-6xl lg:text-7xl">
                 Design systems that scale.
@@ -156,7 +162,7 @@ export default function HomePage() {
                   <Link href="/editor?template=url-shortener">View Demo</Link>
                 </Button>
               </div>
-              <ul className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 pt-1 sm:justify-start">
+              <ul className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 pt-1 lg:justify-start">
                 {HERO_TRUST.map((item) => (
                   <li
                     key={item}

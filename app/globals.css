@@ -431,6 +431,13 @@
   .animate-float {
     animation: af-float 7s ease-in-out infinite;
   }
+
+  /* One-time hero image entrance — descends from above, the opposite of the
+     hero text, which rises up via <Reveal>. `both` holds the start frame
+     through any animation-delay so there's no flash of the final position. */
+  .animate-hero-image-in {
+    animation: af-hero-image-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
 }
 
 @keyframes af-drift {
@@ -450,6 +457,17 @@
   }
   50% {
     transform: translate3d(0, -3px, 0);
+  }
+}
+
+@keyframes af-hero-image-in {
+  from {
+    opacity: 0;
+    transform: translateY(-32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
