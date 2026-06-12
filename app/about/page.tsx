@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { SiteNav } from "@/components/landing/site-nav";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { SectionHeading } from "@/components/landing/section-heading";
+import { Reveal } from "@/components/landing/reveal";
 import { GithubMark, GITHUB_URL } from "@/components/brand/github-mark";
 
 export const metadata: Metadata = {
@@ -29,31 +30,41 @@ const TECH_STACK = [
 
 export default function AboutPage() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="marketing-page flex min-h-screen flex-col">
       <SiteNav />
       <main className="flex-1">
         {/* Mission */}
-        <section className="border-b border-border bg-secondary-bg/40">
-          <div className="mx-auto w-full max-w-3xl px-6 py-16 lg:py-24">
-            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-accent">
-              About
-            </span>
-            <h1 className="mt-3 text-balance text-4xl font-semibold sm:text-5xl">
-              A system-design tool that respects your intelligence.
-            </h1>
-            <p className="mt-6 text-lg leading-8 text-text-secondary">
-              ArchForge exists to make distributed-system design tangible. Most
-              tools stop at boxes and arrows. ArchForge goes further: it
-              simulates real traffic, reasons about your topology as a graph, and
-              writes the document you&apos;d hand to a reviewer — so the diagram
-              becomes a model you can actually test.
-            </p>
+        <section className="relative overflow-hidden border-b border-border bg-secondary-bg/40">
+          <div
+            aria-hidden
+            className="bg-aurora pointer-events-none absolute inset-0 opacity-80"
+          />
+          <div
+            aria-hidden
+            className="bg-blueprint pointer-events-none absolute inset-0 opacity-40"
+          />
+          <div className="relative mx-auto w-full max-w-3xl px-6 py-16 lg:py-24">
+            <Reveal>
+              <span className="text-xs font-semibold uppercase tracking-[0.14em] text-accent">
+                About
+              </span>
+              <h1 className="mt-3 text-balance text-4xl font-semibold sm:text-5xl">
+                A system-design tool that respects your intelligence.
+              </h1>
+              <p className="mt-6 text-lg leading-8 text-text-secondary">
+                ArchForge exists to make distributed-system design tangible.
+                Most tools stop at boxes and arrows. ArchForge goes further: it
+                simulates real traffic, reasons about your topology as a graph,
+                and writes the document you&apos;d hand to a reviewer — so the
+                diagram becomes a model you can actually test.
+              </p>
+            </Reveal>
           </div>
         </section>
 
         {/* Honesty */}
         <section className="mx-auto w-full max-w-3xl px-6 py-16">
-          <div className="flex flex-col gap-4">
+          <Reveal className="flex flex-col gap-4">
             <span className="grid size-11 place-items-center rounded-xl bg-accent-soft text-accent">
               <ShieldCheck className="size-6" />
             </span>
@@ -74,13 +85,13 @@ export default function AboutPage() {
               and reproducibility matter more than a confident-sounding
               paragraph. Every warning is something you can trace back to a rule.
             </p>
-          </div>
+          </Reveal>
         </section>
 
         {/* Simulator */}
         <section className="border-y border-border bg-secondary-bg/40">
           <div className="mx-auto w-full max-w-3xl px-6 py-16">
-            <div className="flex flex-col gap-4">
+            <Reveal className="flex flex-col gap-4">
               <span className="grid size-11 place-items-center rounded-xl bg-accent-soft text-accent">
                 <GaugeCircle className="size-6" />
               </span>
@@ -103,32 +114,38 @@ export default function AboutPage() {
                 and you&apos;ll watch tail latency climb and queues saturate —
                 exactly as queueing theory predicts.
               </p>
-            </div>
+            </Reveal>
           </div>
         </section>
 
         {/* Tech stack */}
         <section className="mx-auto w-full max-w-3xl px-6 py-16">
-          <SectionHeading
-            eyebrow="Under the hood"
-            title="Built on a modern, typed stack."
-          />
-          <dl className="mt-10 divide-y divide-border overflow-hidden rounded-2xl border border-border bg-surface">
-            {TECH_STACK.map((tech) => (
-              <div
-                key={tech.name}
-                className="flex flex-col gap-1 px-5 py-4 sm:flex-row sm:items-center sm:gap-6"
-              >
-                <dt className="w-44 shrink-0 font-medium">{tech.name}</dt>
-                <dd className="text-text-secondary">{tech.role}</dd>
-              </div>
-            ))}
-          </dl>
+          <Reveal>
+            <SectionHeading
+              eyebrow="Under the hood"
+              title="Built on a modern, typed stack."
+            />
+            <dl className="mt-10 divide-y divide-border overflow-hidden rounded-2xl border border-border bg-surface">
+              {TECH_STACK.map((tech) => (
+                <div
+                  key={tech.name}
+                  className="flex flex-col gap-1 px-5 py-4 sm:flex-row sm:items-center sm:gap-6"
+                >
+                  <dt className="w-44 shrink-0 font-medium">{tech.name}</dt>
+                  <dd className="text-text-secondary">{tech.role}</dd>
+                </div>
+              ))}
+            </dl>
+          </Reveal>
         </section>
 
         {/* CTA */}
-        <section className="border-t border-border">
-          <div className="mx-auto w-full max-w-3xl px-6 py-16 text-center">
+        <section className="relative overflow-hidden border-t border-border">
+          <div
+            aria-hidden
+            className="bg-aurora pointer-events-none absolute inset-0 opacity-70"
+          />
+          <Reveal className="relative mx-auto w-full max-w-3xl px-6 py-16 text-center">
             <span className="mx-auto grid size-11 place-items-center rounded-xl bg-accent-soft text-accent">
               <Compass className="size-6" />
             </span>
@@ -153,7 +170,7 @@ export default function AboutPage() {
                 </a>
               </Button>
             </div>
-          </div>
+          </Reveal>
         </section>
       </main>
       <SiteFooter />

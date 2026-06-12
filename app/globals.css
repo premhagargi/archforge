@@ -78,6 +78,8 @@
   /* Typography */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, "Times New Roman",
+    serif;
   --font-mono: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
 
   /* Radii */
@@ -305,6 +307,179 @@
   }
 }
 
+/* ----------------------------------------------------------------------------
+   Marketing surface
+   Display typography, textured backgrounds, glows, and scroll-reveal motion.
+   All of it is scoped to `.marketing-page` so the editor/app stays untouched.
+   ---------------------------------------------------------------------------- */
+
+/* Editorial serif display type — Fraunces, tuned warm via its optical / soft /
+   wonk axes. We deliberately omit the `wght` axis from variation-settings so
+   Tailwind's `font-*` weight utilities still drive weight. */
+.marketing-page h1,
+.marketing-page h2,
+.marketing-page h3,
+.marketing-page .font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.015em;
+  font-variation-settings: "opsz" 60, "SOFT" 24, "WONK" 0;
+}
+
+.marketing-page h1,
+.marketing-page .font-display-xl {
+  font-variation-settings: "opsz" 144, "SOFT" 40, "WONK" 1;
+  letter-spacing: -0.028em;
+}
+
+.marketing-page h2 {
+  font-variation-settings: "opsz" 96, "SOFT" 32, "WONK" 0;
+  letter-spacing: -0.022em;
+}
+
+@layer utilities {
+  /* Warm aurora wash for the hero & big bands — layered radial glows. */
+  .bg-aurora {
+    background-image:
+      radial-gradient(
+        55% 55% at 12% 8%,
+        rgba(223, 95, 52, 0.18),
+        transparent 72%
+      ),
+      radial-gradient(
+        45% 50% at 92% 14%,
+        rgba(181, 110, 61, 0.16),
+        transparent 70%
+      ),
+      radial-gradient(
+        60% 60% at 78% 102%,
+        rgba(79, 122, 90, 0.1),
+        transparent 72%
+      );
+  }
+
+  /* Fine architectural blueprint grid, faded toward the edges. */
+  .bg-blueprint {
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-position: center;
+    -webkit-mask-image: radial-gradient(
+      120% 100% at 50% 0%,
+      #000 35%,
+      transparent 85%
+    );
+    mask-image: radial-gradient(120% 100% at 50% 0%, #000 35%, transparent 85%);
+  }
+
+  /* Same blueprint grid tuned for the dark "engineered" band. */
+  .bg-blueprint-dark {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 44px 44px;
+    background-position: center;
+    -webkit-mask-image: radial-gradient(
+      110% 110% at 70% 0%,
+      #000 30%,
+      transparent 80%
+    );
+    mask-image: radial-gradient(110% 110% at 70% 0%, #000 30%, transparent 80%);
+  }
+
+  /* Film-grain overlay. Drop `.grain` on a `relative` container — it paints a
+     non-interactive noise layer over the section background. */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 160px 160px;
+  }
+
+  .grain-dark::after {
+    mix-blend-mode: screen;
+    opacity: 0.06;
+  }
+
+  /* Accent gradient text for a single emphasized word. */
+  .text-gradient-accent {
+    background-image: linear-gradient(
+      115deg,
+      var(--accent) 0%,
+      #b56e3d 55%,
+      var(--warning) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Soft drifting motion for decorative glow blobs. */
+  .animate-drift {
+    animation: af-drift 16s ease-in-out infinite;
+  }
+  .animate-drift-slow {
+    animation: af-drift 24s ease-in-out infinite;
+  }
+
+  /* Very light float for the hero architecture image (2–4px). */
+  .animate-float {
+    animation: af-float 7s ease-in-out infinite;
+  }
+}
+
+@keyframes af-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -22px, 0) scale(1.06);
+  }
+}
+
+@keyframes af-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -3px, 0);
+  }
+}
+
+/* Scroll-reveal: hidden until the IntersectionObserver in <Reveal> adds
+   `.is-visible`. Honors `--reveal-delay` for staggered entrances. */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Top-of-page scroll progress bar. */
+.scroll-progress {
+  transform-origin: 0 50%;
+  background-image: linear-gradient(
+    90deg,
+    var(--accent),
+    #b56e3d 60%,
+    var(--warning)
+  );
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -312,5 +487,11 @@
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
+  }
+
+  /* Never leave reveal content stuck hidden when motion is reduced. */
+  .reveal {
+    opacity: 1;
+    transform: none;
   }
 }

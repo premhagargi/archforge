@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Fraunces } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
 
@@ -7,6 +7,16 @@ const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
+});
+
+// Editorial display serif for the marketing pages. We pull the optical-size,
+// soft, and wonk axes so big headlines can be tuned warm via
+// `font-variation-settings` (see `.marketing-page` headings in globals.css).
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
+  display: "swap",
+  axes: ["opsz", "SOFT", "WONK"],
 });
 
 const SITE_NAME = "ArchForge";
@@ -59,7 +69,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} h-full`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${inter.variable} ${fraunces.variable} h-full`}
+      suppressHydrationWarning
+    >
       <body className="min-h-full bg-background text-text antialiased">
         {children}
         <Toaster

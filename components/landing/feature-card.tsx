@@ -19,7 +19,7 @@ export function FeatureCard({
   return (
     <div
       className={cn(
-        "group flex flex-col gap-3 rounded-2xl border border-border bg-surface p-6 shadow-xs transition-colors hover:border-border-strong",
+        "group flex flex-col gap-3 rounded-2xl border border-border bg-surface/80 p-6 shadow-xs backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-border-strong hover:shadow-md",
         className,
       )}
     >

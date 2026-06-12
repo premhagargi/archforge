@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { SiteNav } from "@/components/landing/site-nav";
 import { SiteFooter } from "@/components/landing/site-footer";
+import { Reveal } from "@/components/landing/reveal";
 
 export const metadata: Metadata = {
   title: "Example · URL Shortener",
@@ -76,12 +77,20 @@ export default function UrlShortenerExamplePage() {
   ];
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="marketing-page flex min-h-screen flex-col">
       <SiteNav />
       <main className="flex-1">
         {/* Hero */}
-        <section className="border-b border-border bg-secondary-bg/40">
-          <div className="mx-auto w-full max-w-4xl px-6 py-16 lg:py-20">
+        <section className="relative overflow-hidden border-b border-border bg-secondary-bg/40">
+          <div
+            aria-hidden
+            className="bg-aurora pointer-events-none absolute inset-0 opacity-80"
+          />
+          <div
+            aria-hidden
+            className="bg-blueprint pointer-events-none absolute inset-0 opacity-40"
+          />
+          <Reveal className="relative mx-auto w-full max-w-4xl px-6 py-16 lg:py-20">
             <div className="flex items-center gap-2">
               <Badge variant="accent">Example</Badge>
               <Badge variant="neutral">{template.category}</Badge>
@@ -106,7 +115,7 @@ export default function UrlShortenerExamplePage() {
                 <Link href="/templates">All templates</Link>
               </Button>
             </div>
-          </div>
+          </Reveal>
         </section>
 
         {/* Load assumptions */}
@@ -212,8 +221,12 @@ export default function UrlShortenerExamplePage() {
         </section>
 
         {/* CTA */}
-        <section className="border-t border-border bg-secondary-bg/40">
-          <div className="mx-auto w-full max-w-4xl px-6 py-16 text-center">
+        <section className="relative overflow-hidden border-t border-border bg-secondary-bg/40">
+          <div
+            aria-hidden
+            className="bg-aurora pointer-events-none absolute inset-0 opacity-70"
+          />
+          <Reveal className="relative mx-auto w-full max-w-4xl px-6 py-16 text-center">
             <h2 className="text-balance text-3xl font-semibold">
               Make it yours.
             </h2>
@@ -227,7 +240,7 @@ export default function UrlShortenerExamplePage() {
                 <ArrowRight className="size-4" />
               </Link>
             </Button>
-          </div>
+          </Reveal>
         </section>
       </main>
       <SiteFooter />

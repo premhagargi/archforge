@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/brand/logo";
 import { GithubMark, GITHUB_URL } from "@/components/brand/github-mark";
+import { ScrollProgress } from "@/components/landing/scroll-progress";
 
 const NAV_LINKS = [
   { href: "/templates", label: "Templates" },
@@ -60,6 +61,7 @@ export function SiteNav() {
           </Button>
         </div>
       </div>
+      <ScrollProgress />
     </header>
   );
 }
