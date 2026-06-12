@@ -103,8 +103,9 @@ export default function HomePage() {
         {/* Hero — full-bleed, the architecture image *is* the hero. */}
         <section className="relative flex min-h-svh items-center overflow-hidden border-b border-border">
           {/* Architecture visual. Slightly oversized and gently floating so the
-              diagram feels alive — no parallax, no hard edges. */}
-          <div aria-hidden className="animate-float absolute -inset-4">
+              diagram feels alive — no parallax, no hard edges. Hidden on mobile,
+              where the hero is text-only on the warm background. */}
+          <div aria-hidden className="animate-float absolute -inset-4 hidden sm:block">
             <Image
               src="/images/hero-architecture.png"
               alt=""
@@ -117,15 +118,12 @@ export default function HomePage() {
             />
           </div>
 
-          {/* Readability wash — strong on the left, clear over the diagram on
-              the right. Mobile gets a more uniform, stronger overlay. */}
+          {/* Readability wash over the desktop image — strong on the left,
+              clear over the diagram on the right. No image on mobile, so no
+              wash needed there. */}
           <div
             aria-hidden
             className="absolute inset-0 hidden sm:block bg-[linear-gradient(90deg,rgba(248,246,242,0.97)_0%,rgba(248,246,242,0.88)_30%,rgba(248,246,242,0.38)_56%,rgba(248,246,242,0)_74%)]"
-          />
-          <div
-            aria-hidden
-            className="absolute inset-0 sm:hidden bg-[linear-gradient(180deg,rgba(248,246,242,0.84)_0%,rgba(248,246,242,0.92)_100%)]"
           />
           {/* Bottom fade so the image melts into the page background. */}
           <div
