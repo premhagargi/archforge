@@ -113,7 +113,7 @@ export default function HomePage() {
               quality={90}
               loading="eager"
               fetchPriority="high"
-              className="object-cover object-right"
+              className="object-cover object-right sm:object-contain"
             />
           </div>
 
